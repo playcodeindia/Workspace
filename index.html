@@ -1,9 +1,20 @@
+
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>PlaycodeX Workspace</title>
+
+    <!-- PlaycodeX PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#141218">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PlaycodeX">
+    <link rel="apple-touch-icon" href="image340.png">
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2225,6 +2236,28 @@
             .modal.show .modal-content { transform: none !important; }
             .m3-loader__shape, .m3-loader::before, .loading-card::before { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
         }
+
+        /* ================= PWA INSTALL POPUP ================= */
+        .pwa-install-popup {
+            position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%);
+            width: min(92vw, 430px); padding: 16px; z-index: 12000;
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(33,31,38,.96); border: 1px solid rgba(208,188,255,.22);
+            border-radius: 22px; box-shadow: 0 24px 70px rgba(0,0,0,.55);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            transition: transform .5s cubic-bezier(.38,1.21,.22,1);
+        }
+        .pwa-install-popup.show { transform: translate(-50%, 0); }
+        .pwa-install-icon { width: 52px; height: 52px; border-radius: 15px; object-fit: cover; flex: 0 0 auto; }
+        .pwa-install-content { min-width: 0; flex: 1; }
+        .pwa-install-title { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: #fff; }
+        .pwa-install-text { margin-top: 2px; font-size: 12px; color: var(--md-sys-color-on-surface-variant); line-height: 1.4; }
+        .pwa-install-actions { display:flex; gap:7px; margin-top:10px; }
+        .pwa-install-btn { border:0; border-radius:999px; padding:8px 14px; font:600 12px var(--font-display); cursor:pointer; }
+        .pwa-install-btn.primary { color:#fff; background:linear-gradient(120deg,#4285F4,#B983FF); }
+        .pwa-install-btn.dismiss { color:var(--md-sys-color-on-surface-variant); background:var(--md-sys-color-surface-container-high); }
+        .pwa-install-close { align-self:flex-start; width:30px; height:30px; border:0; border-radius:50%; background:transparent; color:#aaa; cursor:pointer; }
+        @media(max-width:480px){ .pwa-install-popup{bottom:12px}.pwa-install-icon{width:46px;height:46px}.pwa-install-popup{padding:13px} }
     </style>
 </head>
 <body>
@@ -5152,6 +5185,21 @@
         showSignIn();
         initializeFirebaseAuth();
     </script>
+
+    <!-- ================= PWA INSTALL POPUP ================= -->
+    <div id="pwaInstallPopup" class="pwa-install-popup" role="dialog" aria-label="Install PlaycodeX" aria-hidden="true">
+        <img class="pwa-install-icon" src="image340.png" alt="PlaycodeX">
+        <div class="pwa-install-content">
+            <div class="pwa-install-title">Install PlaycodeX</div>
+            <div class="pwa-install-text">Install the app for a faster, app-like experience.</div>
+            <div class="pwa-install-actions">
+                <button id="pwaInstallBtn" class="pwa-install-btn primary" type="button">Install App</button>
+                <button id="pwaLaterBtn" class="pwa-install-btn dismiss" type="button">Later</button>
+            </div>
+        </div>
+        <button id="pwaCloseBtn" class="pwa-install-close" type="button" aria-label="Close">✕</button>
+    </div>
+
     <script>
         function runRecaptcha(e) {
             e.preventDefault();
@@ -5168,6 +5216,71 @@
                 });
             });
         }
+
+    <script>
+        // ================= PLAYCODEX PWA INSTALL SYSTEM =================
+        (() => {
+            let deferredInstallPrompt = null;
+            const popup = () => document.getElementById('pwaInstallPopup');
+            const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+            function showPwaInstallPopup() {
+                if (!popup() || isStandalone()) return;
+                popup().classList.add('show');
+                popup().setAttribute('aria-hidden', 'false');
+            }
+            function hidePwaInstallPopup() {
+                if (!popup()) return;
+                popup().classList.remove('show');
+                popup().setAttribute('aria-hidden', 'true');
+            }
+
+            window.addEventListener('beforeinstallprompt', (event) => {
+                event.preventDefault();
+                deferredInstallPrompt = event;
+                // Show only after the user has seen the app, avoiding an instant popup.
+                setTimeout(showPwaInstallPopup, 1800);
+            });
+
+            window.addEventListener('appinstalled', () => {
+                deferredInstallPrompt = null;
+                hidePwaInstallPopup();
+                if (typeof showAnimatedToast === 'function') showAnimatedToast('PlaycodeX installed successfully!', 'success');
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('pwaInstallBtn')?.addEventListener('click', async () => {
+                    if (!deferredInstallPrompt) {
+                        hidePwaInstallPopup();
+                        return;
+                    }
+                    deferredInstallPrompt.prompt();
+                    const choice = await deferredInstallPrompt.userChoice;
+                    deferredInstallPrompt = null;
+                    hidePwaInstallPopup();
+                    console.log('PWA install choice:', choice.outcome);
+                });
+                document.getElementById('pwaLaterBtn')?.addEventListener('click', hidePwaInstallPopup);
+                document.getElementById('pwaCloseBtn')?.addEventListener('click', hidePwaInstallPopup);
+
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('./sw.js').then(reg => {
+                        console.log('PlaycodeX service worker registered:', reg.scope);
+                    }).catch(err => console.warn('PWA service worker registration failed:', err));
+                }
+            });
+
+            // Expose manual installer for an optional Install button anywhere in the UI.
+            window.installPlaycodeX = async function() {
+                if (!deferredInstallPrompt) { showPwaInstallPopup(); return false; }
+                deferredInstallPrompt.prompt();
+                await deferredInstallPrompt.userChoice;
+                deferredInstallPrompt = null;
+                hidePwaInstallPopup();
+                return true;
+            };
+        })();
+    </script>
     </script>
 </body>
 </html>
