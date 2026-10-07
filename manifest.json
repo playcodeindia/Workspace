@@ -2,24 +2,24 @@
   "name": "PlaycodeX",
   "short_name": "PlaycodeX",
   "description": "PlaycodeX Workspace",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/Demo/",
+  "scope": "/Demo/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#141218",
-  "theme_color": "#141218",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
-      "src": "./image340.png",
+      "src": "/Demo/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "./image340.png",
+      "src": "/Demo/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
