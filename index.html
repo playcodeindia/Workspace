@@ -3,12 +3,12 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>PlaycodeX Workspace</title>
 
     <!-- PlaycodeX PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#141218">
+    <meta name="theme-color" content="#0c1118">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,7 +28,7 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6LdjKNAtAAAAADGMyiyq61CH79sj62xSUw18AKBw"></script>
     
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20261113"><link rel="stylesheet" href="app-refresh.css?v=20261113">
 </head>
 <body>
 
@@ -329,11 +329,11 @@
             </a>
 
             <nav class="nav-links">
-                <a class="nav-item active" onclick="showManageAccount(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">dashboard</span> Dashboard</a>
-                <a class="nav-item" onclick="showMyOrders(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">receipt_long</span> My Orders</a>
-                <a class="nav-item" onclick="showTransactionHistory(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">history</span> Transaction History</a>
-                <a class="nav-item" onclick="startChangePinFlow()"><span class="material-icons-round">password</span> Change PIN</a>
-                <a class="nav-item text-error" style="margin-top: auto;" onclick="executeSignOut(event)"><span class="material-icons-round text-error">logout</span> Secure Sign Out</a>
+                <a role="button" tabindex="0" class="nav-item active" onclick="showManageAccount(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">dashboard</span> Dashboard</a>
+                <a role="button" tabindex="0" class="nav-item" onclick="showMyOrders(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">receipt_long</span> My Orders</a>
+                <a role="button" tabindex="0" class="nav-item" onclick="showTransactionHistory(); document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active')); this.classList.add('active');"><span class="material-icons-round">history</span> Transaction History</a>
+                <a role="button" tabindex="0" class="nav-item" onclick="startChangePinFlow()"><span class="material-icons-round">password</span> Change PIN</a>
+                <a role="button" tabindex="0" class="nav-item text-error" style="margin-top: auto;" onclick="executeSignOut(event)"><span class="material-icons-round text-error">logout</span> Secure Sign Out</a>
             </nav>
         </aside>
 
@@ -343,7 +343,7 @@
                 <button class="menu-toggle" id="menuBtn" aria-label="Toggle Menu">
                     <span class="material-icons-round">menu</span>
                 </button>
-                <div class="header-actions">
+                <div class="app-heading"><span>YOUR DAILY SPACE</span><strong>Workspace</strong></div><div class="header-actions">
                     <button class="notification-button" type="button" onclick="toggleNotificationsPanel(event)">
                         <span class="material-icons-round">notifications_none</span>
                         <span id="notificationBadge" class="notification-badge">0</span>
@@ -393,13 +393,13 @@
                 </div>
             </div>
 
-            <div class="content-container">
+<nav class="mobile-dock" aria-label="Main navigation"><button data-page="manageAccount" onclick="showManageAccount()"><span class="material-icons-round">space_dashboard</span>Home</button><button data-page="myOrdersSection" onclick="showMyOrders()"><span class="material-icons-round">confirmation_number</span>Orders</button><button data-page="transactionHistorySection" onclick="showTransactionHistory()"><span class="material-icons-round">swap_horiz</span>Activity</button><button onclick="payToFriend()"><span class="material-icons-round">north_east</span>Send</button></nav><div class="content-container">
                 
                 <div id="manageAccount">
                     <div class="greeting-section">
                         <div class="greeting-content">
                             <h1 class="greeting-title" id="welcomeTitle">Welcome</h1>
-                            <p class="greeting-subtitle">Here is your account overview for today.</p>
+                            <p class="greeting-subtitle">Your codes. Your people. Your next move.</p>
                         </div>
                         <div class="welcome-financials">
                             <div class="welcome-fin-label">AVAILABLE FUNDS</div>
@@ -409,7 +409,7 @@
                     </div>
 
                     <div class="section-header">
-                        <span class="material-icons-round" style="color:var(--md-sys-color-primary)">apps</span> Quick Actions
+                        <span class="material-icons-round" style="color:var(--md-sys-color-primary)">apps</span> Make your next move
                     </div>
                     
                     <!-- ============ LANDSCAPE SERVICE CARDS ============ -->
@@ -418,7 +418,7 @@
                             <div class="service-icon"><span class="material-icons-round">account_balance_wallet</span></div>
                             <div class="service-body">
                                 <div class="service-name">Add Balance</div>
-                                <div class="service-desc">Top up your wallet via UPI, agent or QR</div>
+                                <div class="service-desc">Add funds with your preferred payment method</div>
                             </div>
                             <span class="material-icons-round service-arrow">arrow_forward_ios</span>
                         </button>
@@ -427,7 +427,7 @@
                             <div class="service-icon"><span class="material-icons-round">qr_code_2</span></div>
                             <div class="service-body">
                                 <div class="service-name">Order Play Code</div>
-                                <div class="service-desc">Generate a fresh play code instantly</div>
+                                <div class="service-desc">Choose an amount. Review. Confirm.</div>
                             </div>
                             <span class="material-icons-round service-arrow">arrow_forward_ios</span>
                         </button>
@@ -435,7 +435,7 @@
                         <button class="service-card transfer" onclick="payToFriend()">
                             <div class="service-icon"><span class="material-icons-round">send_to_mobile</span></div>
                             <div class="service-body">
-                                <div class="service-name">Transfer Funds</div>
+                                <div class="service-name">Send to a friend</div>
                                 <div class="service-desc">Send money securely to another account</div>
                             </div>
                             <span class="material-icons-round service-arrow">arrow_forward_ios</span>
@@ -444,7 +444,7 @@
                         <button class="service-card history" onclick="showTransactionHistory()">
                             <div class="service-icon"><span class="material-icons-round">bar_chart</span></div>
                             <div class="service-body">
-                                <div class="service-name">Detailed Analytics</div>
+                                <div class="service-name">Activity</div>
                                 <div class="service-desc">Review your full transaction history</div>
                             </div>
                             <span class="material-icons-round service-arrow">arrow_forward_ios</span>
@@ -453,7 +453,7 @@
                         <button class="service-card check" onclick="checkBalance()">
                             <div class="service-icon"><span class="material-icons-round">account_balance</span></div>
                             <div class="service-body">
-                                <div class="service-name">Check Status</div>
+                                <div class="service-name">Your Balance</div>
                                 <div class="service-desc">View live balance from the ledger</div>
                             </div>
                             <span class="material-icons-round service-arrow">arrow_forward_ios</span>
@@ -469,14 +469,7 @@
                         </button>
                     </div>
 
-                    <div class="trust-score-card">
-                        <div class="trust-header">
-                            <span class="trust-title">Account Trust Score</span>
-                            <span class="trust-status">Excellent</span>
-                        </div>
-                        <div class="trust-bar-bg"><div class="trust-bar-fill"></div></div>
-                        <div class="trust-footer"><span class="material-icons-round" style="color:#6DD58C; font-size:18px;">verified</span> Protected by Firebase Enterprise Security Protocols</div>
-                    </div>
+<div class="workspace-tip"><span class="material-icons-round">receipt_long</span><div><strong>Keep track of every move.</strong><p>Find code orders in My Orders and payments in Activity.</p></div><button class="btn btn-secondary btn-sm" onclick="showMyOrders()">View orders ↗</button></div>
                 </div>
 
                 <div id="transactionHistorySection" style="display: none;">
@@ -702,22 +695,22 @@
 
     <div id="orderCodeModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Order Play Code</h2><button class="modal-close" onclick="closeModal('orderCodeModal')"><span class="material-icons-round">close</span></button></div>
+            <div class="modal-header"><h2 class="modal-title">Order a code <small class="step-caption">01 / Details</small></h2><button class="modal-close" onclick="closeModal('orderCodeModal')"><span class="material-icons-round">close</span></button></div>
             <div class="modal-body">
-                <div class="form-group"><label class="form-label">Amount (₹)</label><input type="number" id="orderAmount" class="form-control" placeholder="0" min="10" step="10"></div>
-                <div class="form-group"><label class="form-label">Confirm PIN</label><input type="password" id="orderPin" class="form-control" placeholder="••••" maxlength="4" pattern="\d{4}"></div>
+                <div class="form-group"><label class="form-label">Amount (₹)</label><input type="number" id="orderAmount" class="form-control" placeholder="0" min="10" step="0.01" inputmode="decimal" oninput="updateOrderSummary()"></div>
+                
                 <div class="bg-surface-variant">
                     <div class="flex justify-between text-sm mb-2"><span class="text-muted">Current Balance:</span><span class="font-semibold" id="currentBalanceDisplay">₹0</span></div>
                     <div class="flex justify-between text-sm"><span class="text-muted">Balance After:</span><span class="font-semibold" id="balanceAfterDisplay">₹0</span></div>
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-outlined" onclick="closeModal('orderCodeModal')">Cancel</button><button class="btn btn-primary" onclick="submitOrder()">Generate</button></div>
+            <div class="modal-footer"><button class="btn btn-outlined" onclick="closeModal('orderCodeModal')">Cancel</button><button class="btn btn-primary" onclick="submitOrder()">Review order →</button></div>
         </div>
     </div>
 
     <div id="payToFriendModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Send Money</h2><button class="modal-close" onclick="closeModal('payToFriendModal')"><span class="material-icons-round">close</span></button></div>
+            <div class="modal-header"><h2 class="modal-title">Send to a friend <small class="step-caption">01 / Details</small></h2><button class="modal-close" onclick="closeModal('payToFriendModal')"><span class="material-icons-round">close</span></button></div>
             <div class="modal-body">
                 <div class="form-group">
                     <label class="form-label">Recipient Account</label>
@@ -726,15 +719,15 @@
                         <div id="searchResults" class="search-results"></div>
                     </div>
                 </div>
-                <div class="form-group"><label class="form-label">Amount (₹)</label><input type="number" id="transferAmount" class="form-control" placeholder="0" min="1" oninput="updateTransferSummary()"></div>
-                <div class="form-group"><label class="form-label">Confirm PIN</label><input type="password" id="transferPin" class="form-control" placeholder="••••" maxlength="4" pattern="\d{4}"></div>
+                <div class="form-group"><label class="form-label">Amount (₹)</label><input type="number" id="transferAmount" class="form-control" placeholder="0" min="0.01" step="0.01" inputmode="decimal" oninput="updateTransferSummary()"></div>
+                
                 <div class="bg-surface-variant">
                     <div id="friendInfo" style="display: none; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);"><p class="text-sm font-medium" style="color:#6DD58C;">Sending to: <span id="friendName">...</span></p></div>
                     <div class="flex justify-between text-sm mb-2"><span class="text-muted">Current Balance:</span><span class="font-semibold" id="currentTransferBalance">₹0</span></div>
                     <div class="flex justify-between text-sm"><span class="text-muted">Balance After:</span><span class="font-semibold" id="balanceAfterTransfer">₹0</span></div>
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-outlined" onclick="closeModal('payToFriendModal')">Cancel</button><button class="btn btn-primary" onclick="processTransfer()">Send</button></div>
+            <div class="modal-footer"><button class="btn btn-outlined" onclick="closeModal('payToFriendModal')">Cancel</button><button class="btn btn-primary" onclick="processTransfer()">Review payment →</button></div>
         </div>
     </div>
 
@@ -1042,6 +1035,21 @@
     
 
     
-    <script src="app.js"></script>
+    <script src="app.js?v=20261113"></script><script src="transaction-flow.js?v=20261113"></script>
+
+<div id="transactionFlowModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
+ <div class="modal-content payment-sheet">
+  <div class="modal-header"><h2 class="modal-title" id="flowTitle">Review</h2><button class="modal-close" onclick="cancelTransactionFlow()" aria-label="Close confirmation"><span class="material-icons-round">close</span></button></div>
+  <div class="modal-body"><div class="flow-progress" aria-label="Transaction progress"><span>1 Details</span><span id="reviewStep">2 Review</span><span id="pinStep">3 Confirm</span></div>
+   <div class="payment-recipient"><span class="material-icons-round" id="flowIcon">confirmation_number</span><p id="flowRecipient"></p><small id="flowAccount"></small><strong id="flowAmount"></strong></div>
+   <div class="payment-breakdown"><span>Payment from</span><strong>PlaycodeX balance</strong><span>Balance after payment</span><strong id="flowBalance"></strong></div>
+   <p id="flowMessage" class="flow-message" role="status" aria-live="polite"></p>
+   <form id="paymentPinForm" hidden onsubmit="event.preventDefault(); confirmTransaction()"><label for="paymentPin">Enter your 4-digit PIN to confirm</label><input id="paymentPin" type="password" inputmode="numeric" autocomplete="off" maxlength="4" pattern="[0-9]{4}" class="form-control" placeholder="••••" aria-describedby="flowError"><p class="pin-helper">Your PIN is only needed to confirm this payment.</p></form>
+   <p id="flowError" class="flow-error" role="alert"></p>
+  </div>
+  <div class="modal-footer"><button id="flowBack" class="btn btn-outlined" onclick="editTransactionDetails()">Edit details</button><button id="flowContinue" class="btn btn-primary" onclick="advanceTransactionFlow()">Continue →</button></div>
+ </div>
+</div>
+
 </body>
 </html>
