@@ -1,50 +1,36 @@
-const CACHE_NAME = "playcodex-pwa-v1";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./image340.png"
-];
-
 self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
-  );
-  self.skipWaiting();
+    event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
-  );
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request).then(response => {
-        if (!response || response.status !== 200 || response.type === "opaque") {
-          return response;
-        }
-
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        return response;
-      }).catch(() => {
-        if (event.request.mode === "navigate") {
-          return caches.match("./index.html");
-        }
-      });
-    })
-  );
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            new Response(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta name="viewport"
+                    content="width=device-width, initial-scale=1">
+                    <title>Playcode Discontinued</title>
+                </head>
+                <body style="background:#101010;color:white;
+                font-family:Arial;text-align:center;padding:60px 20px;">
+                    <h1>Playcode</h1>
+                    <h2>Service Discontinued</h2>
+                    <p>This version of Playcode is no longer supported.</p>
+                    <p>Please uninstall this application.</p>
+                </body>
+                </html>
+            `, {
+                status: 410,
+                headers: {
+                    "Content-Type": "text/html; charset=utf-8"
+                }
+            })
+        );
+    }
 });
